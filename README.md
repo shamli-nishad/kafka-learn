@@ -1,4 +1,4 @@
-# Vending Machine Telemetry System
+# Kafka Basics
 
 This is a sample project to learn the basics of Kafka. This project consists of two microservices: 
 1. Telemetry Producer: Receives telemetry data via REST API and sends it to a Kafka topic (`vending-telemetry`).
@@ -163,6 +163,10 @@ Follow these steps to initialize your local repository and push it to a remote s
 6. **Push to remote**: `git push -u origin main` uploads your local commits to the remote repository.
 7. **Check status**: `git status` shows the current state of your repository.
 8. **View history**: `git log` displays the commit history.
+9. **View remote**: `git remote -v` displays the remote repository URL.
+10. **remove a file that was accidentally added to the repository**: `git rm <file-name>` removes the file from the repository. 
+
+
 
 
 ```bash
