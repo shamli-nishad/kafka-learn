@@ -108,6 +108,13 @@ The Java classes are generated from `src/main/resources/avro/telemetry.avsc`.
 - **Remove all unused containers, networks, and images**: `docker system prune`
 - **Build image without using cache**: `docker-compose build --no-cache`
 
+### Volume Management (Persistence)
+- **List all volumes**: `docker volume ls`
+- **Inspect volume details**: `docker volume inspect <volume_name>`
+- **Remove specific volume**: `docker volume rm <volume_name>`
+- **Remove all unused volumes**: `docker volume prune`
+- **Wipe data & restart**: `docker-compose down -v && docker-compose up -d`
+
 ## 🐙 Git Cheat Sheet
 
 ### Setup & Basics
