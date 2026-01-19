@@ -85,3 +85,36 @@ The Java classes are generated from `src/main/resources/avro/telemetry.avsc`.
 - **Transactions**: Configured via `spring.kafka.producer.transaction-id-prefix`.
 - **DLT**: View failed messages in the `vending-telemetry.DLT` topic via Kafka UI.
 - **Schema Management**: View and manage Avro schemas in the **Schema Registry** tab of the Kafka UI.
+
+## 🐳 Docker Cheat Sheet
+
+### Lifecycle
+- **Start all services**: `docker-compose up -d`
+- **Rebuild and restart**: `docker-compose up -d --build`
+- **Stop services**: `docker-compose stop`
+- **Stop and remove containers**: `docker-compose down`
+- **Stop and remove containers + volumes (Warning: Data Loss)**: `docker-compose down -v`
+
+### Inspection
+- **Check container status**: `docker ps`
+- **View app logs**: `docker-compose logs -f`
+- **View specific logs**: `docker-compose logs -f telemetry-producer`
+- **Check DB connectivity**: `docker exec -it sqlserver /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "your_password" -C -Q "SELECT 1"`
+
+## 🐙 Git Cheat Sheet
+
+### Setup & Basics
+- **Initialize repo**: `git init`
+- **Check status**: `git status`
+- **Stage changes**: `git add .`
+- **Commit changes**: `git commit -m "Your message"`
+
+### Remote Operations
+- **Add remote origin**: `git remote add origin <repo-url>`
+- **Push to main**: `git push -u origin main`
+- **Pull latest changes**: `git pull origin main`
+
+### Hygiene & History
+- **View commit history**: `git log --oneline --graph --all`
+- **Check ignored files**: `git status --ignored`
+- **Create branch**: `git checkout -b feature-name`
