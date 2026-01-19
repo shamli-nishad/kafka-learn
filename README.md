@@ -101,6 +101,13 @@ The Java classes are generated from `src/main/resources/avro/telemetry.avsc`.
 - **View specific logs**: `docker-compose logs -f telemetry-producer`
 - **Check DB connectivity**: `docker exec -it sqlserver /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "your_password" -C -Q "SELECT 1"`
 
+### Image Management
+- **List all local images**: `docker images`
+- **Remove a specific image**: `docker rmi <image_id_or_name>`
+- **Remove all unused images**: `docker image prune`
+- **Remove all unused containers, networks, and images**: `docker system prune`
+- **Build image without using cache**: `docker-compose build --no-cache`
+
 ## 🐙 Git Cheat Sheet
 
 ### Setup & Basics
