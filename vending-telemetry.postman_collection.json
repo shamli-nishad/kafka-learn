@@ -1,0 +1,79 @@
+{
+	"info": {
+		"_postman_id": "8b5a7a9a-3f6c-48b4-9c2b-8a8b5e9f5e9a",
+		"name": "Kafka Telemetry API",
+		"description": "Collection for testing Vending Machine Telemetry Producer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Send Telemetry (Normal)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"machineId\": \"VM-001\",\n  \"timestamp\": \"{{current_timestamp}}\",\n  \"temperature\": 4.5,\n  \"inventory\": {\n    \"Soda\": 10,\n    \"Water\": 15\n  },\n  \"status\": \"OPERATIONAL\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8084/api/telemetry",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"api",
+						"telemetry"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send Telemetry (High Temp Alert)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"machineId\": \"VM-002\",\n  \"timestamp\": \"{{current_timestamp}}\",\n  \"temperature\": 15.8,\n  \"inventory\": {\n    \"Juice\": 5\n  },\n  \"status\": \"WARNING\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8084/api/telemetry",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"api",
+						"telemetry"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.variables.set('current_timestamp', new Date().toISOString().slice(0, 19));"
+				]
+			}
+		}
+	]
+}

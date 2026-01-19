@@ -1,0 +1,12 @@
+{
+  "type": "record",
+  "name": "TelemetryAvro",
+  "namespace": "com.vending.avro",
+  "fields": [
+    {"name": "machineId", "type": "string"},
+    {"name": "timestamp", "type": {"type": "long", "logicalType": "timestamp-millis"}},
+    {"name": "temperature", "type": ["null", "double"], "default": null},
+    {"name": "inventory", "type": {"type": "map", "values": "int"}},
+    {"name": "status", "type": "string"}
+  ]
+}

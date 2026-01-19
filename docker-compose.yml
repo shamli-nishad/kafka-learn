@@ -22,21 +22,71 @@ services:
       # Generated Cluster ID for KRaft
       CLUSTER_ID: 'MkU3ODA4NGU2OTI4OTQxYm'
 
+  schema-registry:
+    image: confluentinc/cp-schema-registry:latest
+    hostname: schema-registry
+    container_name: schema-registry
+    depends_on:
+      - kafka
+    ports:
+      - "8081:8081"
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'kafka:29092'
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
+
   kafka-ui:
     image: ghcr.io/kafbat/kafka-ui:latest
     depends_on:
       - kafka
+      - schema-registry
     ports:
       - "8080:8080"
     environment:
       DYNAMIC_CONFIG_ENABLED: 'true'
       KAFKA_CLUSTERS_0_NAME: 'local'
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: 'kafka:29092'
+      KAFKA_CLUSTERS_0_SCHEMAREGISTRY: 'http://schema-registry:8081'
 
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
     environment:
       ACCEPT_EULA: "Y"
-      SA_PASSWORD: "Okay@1234"
+      SA_PASSWORD: "${MSSQL_SA_PASSWORD}"
     ports:
       - "1433:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+
+  telemetry-producer:
+    build:
+      context: ./telemetry-producer
+      dockerfile: Dockerfile
+    ports:
+      - "8084:8084"
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: 'kafka:29092'
+      SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
+    depends_on:
+      - kafka
+      - schema-registry
+
+  telemetry-consumer:
+    build:
+      context: ./telemetry-consumer
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: 'kafka:29092'
+      SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
+      SQL_SERVER_HOST: 'sqlserver'
+      SQL_SERVER_PASSWORD: "${MSSQL_SA_PASSWORD}"
+    depends_on:
+      - kafka
+      - schema-registry
+      - sqlserver
+
+volumes:
+  sqlserver-data:

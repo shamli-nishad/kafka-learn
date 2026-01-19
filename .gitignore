@@ -1,0 +1,21 @@
+# Sensitive files
+.env
+
+# Maven build artifacts
+target/
+*.jar
+*.war
+*.ear
+
+# IDE specific files
+.idea/
+.vscode/
+*.iml
+.classpath
+.project
+.settings/
+.factorypath
+
+# OS specific files
+Thumbs.db
+.DS_Store
